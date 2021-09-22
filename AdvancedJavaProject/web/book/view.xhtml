@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="BOOK: #{bookBean.selectedBook.title}"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="body">
+            <hr/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            
+            <h:form>
+                <div class="container">
+                    <div class="row">
+                        <div style="height: 100%;">
+                            <h:graphicImage value = "#{bookBean.selectedBook.thumbnail}" height="300px" width="200px"/> 
+                        </div>
+                        <div style="min-height: 300px; width: calc(100% - 200px); float: right;">
+                            <div class="jumbotron jumbotron-fluid px-1 py-3 mb-1" style="min-height: 300px; background-color: white;
+                                 border: 1px solid #ebe7df">
+                                <div class="container">
+                                    <h4 class="display-7">User Vote: 
+                                        <h:outputText value="#{bookBean.averageScore}">
+                                            <f:convertNumber pattern="#0" />
+                                       </h:outputText> / 5
+                                    </h4>
+                                    <h:outputText value="#{bookBean.selectedBook.releaseDate}" title="Release Date">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                    <h:outputText value=" / Genre: #{bookBean.selectedBook.genre} / " title="Genre"/>              
+                                    <h:outputText value=" Author: #{bookBean.selectedBook.getAuthor()}" title="Author"/>
+                                    <h:outputText value="/ House: #{bookBean.selectedBook.house.name}" title="House"/>
+                                    <hr/>
+                                    <h:outputText class ="lead" value="#{bookBean.selectedBook.synopsis}" title="Synopsis"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+            
+            <h:form>                
+                <div class="row">
+                    <div class="col-sm-12 text-right my-2">
+                        <h:commandLink class="btn btn-primary mx-2" style="width: 90px;" action="#{reviewBean.reviewRedirect(bookBean.selectedBook)}" value="Review"/>
+                        <h:commandLink class="btn btn-danger" style="width: 90px;" action="#{bookBean.actionReload}" value="Cancel" immediate="true"/>
+                        <h:commandLink class="btn btn-secondary mx-2" style="width: 90px;" action="#{bookBean.prepareEdit(book)}" value="Edit" rendered="#{authenticationBean.isAdmin()}"/>
+                        <h:commandLink class="btn btn-secondary" style="width: 90px;" action="#{bookBean.delete(book)}" value="Delete" rendered="#{authenticationBean.isAdmin()}"/>
+                    </div>
+                </div>
+                
+                <h:outputText escape="false" value="There are no items here" rendered="#{bookBean.selectedBook.reviewList.size() == 0}"/>
+                <h:panelGroup rendered="#{bookBean.selectedBook.reviewList.size() != 0}">
+                    <ui:repeat var="review" value="#{bookBean.selectedBook.reviewList}">
+                        <div class="p-2 mb-2" style="background-color: white; border: 1px solid #ebe7df">
+                            <h:outputText value="VOTE: #{review.rating} stars"/>
+                            <hr/>
+                            <h:outputText value="#{review.user.name} #{review.user.surname}: #{review.comment}"/>
+                        </div>
+                    </ui:repeat>
+                </h:panelGroup>
+            </h:form>            
+        </ui:define>
+    </ui:composition>
+</html>

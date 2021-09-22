@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Review for Movie: #{bookBean.selectedBook.title}"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <div class="form-group">
+                    <h:panelGrid columns="2" style="width: 100%">
+                        <h:outputLabel value="Rating" for="rating" />
+                        <h:inputText id="rating" class="form-control" value="#{reviewBean.review.rating}" required="true" requiredMessage="Rate the movie!"/>
+
+                        <h:outputLabel value="Comment" for="comment" />
+                        <h:inputTextarea id="comment" class="form-control" value="#{reviewBean.review.comment}" requiredMessage="Review can't be empty"/>
+                    </h:panelGrid>
+                </div>        
+                <div class="row">
+                    <div class="col-sm-12 text-right my-2">
+                        <h:commandLink class="btn btn-primary mx-2" action="#{reviewBean.create}" value="Save"/>
+                        <h:commandLink class="btn btn-danger" action="/book/view" value="Cancel" immediate="true"/>
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

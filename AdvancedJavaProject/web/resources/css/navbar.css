@@ -1,0 +1,16 @@
+.header-navbar {
+    background-color: #26384d;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.header-navbar a, .header-navbar .nav-user {
+    color: white;
+    margin-left: 40px;
+}
+
+.nav-item {
+    display:inline;
+}

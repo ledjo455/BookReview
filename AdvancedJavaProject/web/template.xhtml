@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <h:outputStylesheet library="css" name="navbar.css"/>
+        <h:outputStylesheet library="css" name="footer.css"/>
+    </h:head>
+
+    <h:body style="background: #ebe7df">
+        <nav class="navbar navbar-expand-md header-navbar">
+            <div class="container">
+                <div style="display: inline-block; width: 80%">
+                    <a class="navbar-brand" href="/AdvancedJavaProject">University of New York Tirana Library</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <h:form>
+
+                        <ul class="navbar-nav ml-auto">
+                            
+                            <li class="nav-item">
+                                <span><h:commandLink class="nav-link" action="/authentication/usersData" value="Panel Users"
+                                                     rendered="#{authenticationBean.isAdmin()}"/></span>
+                            </li>
+                             <li class="nav-item">
+                                <span><h:commandLink class="nav-link" action="/review/MyReview" value="My Reviews"
+                                                     rendered="#{authenticationBean.isStandard()}"/></span>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <span><h:commandLink class="nav-link" action="/authentication/login" value="Log In"
+                                                     rendered="#{!authenticationBean.hasCurrentUser()}"/></span>
+                            </li>
+                            <li class="nav-item">
+                                <span><h:commandLink class="nav-link" action="/authentication/register" value="Register"
+                                               rendered="#{!authenticationBean.hasCurrentUser()}"/></span>
+                            </li>
+                            
+                            <li  class="nav-item">
+                                <h:commandLink class="nav-link nav-user" action="#{authenticationBean.redirectToUpdateDataUser()}" value="#{authenticationBean.getCurrentUserName()} #{authenticationBean.getCurrentSurName()}"
+                                                  rendered="#{authenticationBean.hasCurrentUser()}"/>
+                            </li>
+                            <li class="nav-item">    
+                                <span><h:commandLink class="nav-link" action="#{authenticationBean.logOut}" value="Logout"
+                                               rendered="#{authenticationBean.hasCurrentUser()}"/></span>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <h1>
+                <ui:insert name="title">Default Title</ui:insert>
+            </h1>
+            <p>
+                <ui:insert name="body">Default Body</ui:insert>
+            </p>
+        </div>
+    </h:body>
+
+</html>

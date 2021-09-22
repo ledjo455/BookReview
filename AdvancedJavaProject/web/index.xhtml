@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Books"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="body">
+            <hr class="m-0"/>
+            <h:form>
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>    
+                
+                #{bookBean.loadList()}
+                <h:commandLink class="btn btn-primary p-2 my-2 shadow" style="float: right;" 
+                               action="#{bookBean.prepareCreate}" value="Add New Book" rendered="#{authenticationBean.isAdmin()}"/>
+                
+                <h:outputText escape="false" value="No books added yet" rendered="#{!bookBean.hasBooks()}"/>
+                <h:panelGroup rendered="#{bookBean.hasBooks()}">
+                    <h:dataTable class="table table-striped table-light shadow" value="#{bookBean.books}" 
+                                 var="book" border="0" cellpadding="2" cellspacing="0" rules="all"
+                                 style="border: 2.5px solid #ebe7df;">
+                        <h:column>
+                            <f:facet name="header" class="table-primary"><h:outputText value="Title"/></f:facet>
+                            <h:outputText value="#{book.title}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="Release"/></f:facet>
+                            <h:outputText value="#{book.releaseDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="Synopsis"/></f:facet>
+                            <h:outputText value="#{book.synopsis}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="Genre"/></f:facet>
+                            <h:outputText value="#{book.genre}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="Author"/></f:facet>
+                            <h:outputText value="#{book.getAuthor()}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="Score"/></f:facet>
+                            <h:outputText value="#{bookBean.getAverageScore(book)}">
+                                <f:convertNumber pattern="#0" /> / 5
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action"/>
+                            </f:facet>
+                            <h:commandLink action="#{bookBean.prepareView(book)}" value="View"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{reviewBean.reviewRedirect(book)}" value="Review"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bookBean.prepareEdit(book)}" value="Edit" rendered="#{authenticationBean.isAdmin()}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bookBean.delete(book)}" value="Delete" rendered="#{authenticationBean.isAdmin()}"/>
+                        </h:column>
+
+                        
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:form>
+            <br/><br/><br/><br/>
+            <footer class="page-footer font-small special-color-dark pt-2">
+                <h:form>
+                    <h:panelGrid columns="5" class="w-100">
+                      
+                        <h:inputText class="form-control" pt:placeholder="title" id="searchInputTitle" autocomplete="off" value="#{bookBean.title}"  style="margin-bottom: 10px;"/>
+                        <h:inputText class="form-control" pt:placeholder="author" id="searchInputDirector" autocomplete="off" value="#{bookBean.director}" style="margin-bottom: 10px;"/>
+                        <h:inputText class="form-control" pt:placeholder="genre" id="searchInputGenre" autocomplete="off" value="#{bookBean.genre}" style="margin-bottom: 10px;"/>
+                        <h:inputText class="form-control" pt:placeholder="rating" id="searchInputRating" requiredMessage="That is not a number!" autocomplete="off" value="#{bookBean.rating}" style="margin-bottom: 10px;"/>
+                        
+                        <h:commandButton class="btn btn-primary w-100" action="#{bookBean.filterAndLoad()}" value="Search" style="margin-bottom: 10px;"/>
+                        
+                    </h:panelGrid>
+                </h:form>
+            </footer>
+        </ui:define>
+        
+        <ui:define name="footer">
+
+        </ui:define>
+    </ui:composition>
+
+</html>

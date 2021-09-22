@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <title>Log In</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <h:outputStylesheet library="css" name="authentication.css"/>
+        
+    </h:head>
+
+    <h:body style="background-color: #26384d">
+        <div class="container center-screen">
+            <div class="card bg-light mb-3" style="width: 30%;">
+                <div class="card-header bg-secondary text-white">Register</div>
+                <div class="card-body py-0">
+                    <div class="form-group w-100">
+                        
+                        <c:if test="#{userBean.readyToUpdate()}">
+                            <h:form>
+                                <h:panelGrid class="w-100 mb-2">
+                                    <h:outputLabel value="Name" for="name" class="mt-1 mb-0"/>
+                                    <h:inputText id="name" class="form-control w-100" value="#{userBean.getToUpdate().name}" 
+                                                 required="true" requiredMessage="Enter name!"/>
+
+                                    <h:outputLabel value="Surname" for="surname" class="mt-1 mb-0"/>
+                                    <h:inputText id="surname" class="form-control w-100" value="#{userBean.getToUpdate().surname}" 
+                                                 required="true" requiredMessage="Enter surname!"/>
+
+                                    <!-- eclipse bug: eclipse does not allow to update the key -->
+                                   <!-- <h:outputLabel value="Email" for="email" class="mt-1 mb-0"/>
+                                    <h:inputText id="email" class="form-control w-100" value="{authenticationBean.userEmail}" 
+                                                 required="true" requiredMessage="Enter email!"/> -->
+
+                                    <h:outputLabel value="Password" for="password" class="mt-1 mb-0"/>
+                                    <h:inputSecret id="password" class="form-control w-100" value="#{userBean.getToUpdate().password}" 
+                                                   required="true" requiredMessage="Enter password!"/>
+
+                                    <h:outputLabel value="Re-enter Password" for="re-password" class="mt-1 mb-0"/>
+                                    <h:inputSecret id="re-password" class="form-control w-100" value="#{userBean.confirmUserPassword}" 
+                                                   required="true" requiredMessage="Enter password!"/>
+                                </h:panelGrid>
+
+                                <h:commandLink class="btn btn-primary w-100 mb-2" action="#{userBean.updateData}" value="Update" />
+                                <br/>
+                            </h:form>
+                        </c:if>
+                        
+                        <h:form>
+                            <br/>
+                            <h:commandLink class="btn btn-secondary w-100" action="#{bookBean.actionReload}" value="Go back to Main Menu" immediate="true" />
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

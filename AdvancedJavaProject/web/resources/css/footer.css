@@ -1,0 +1,14 @@
+.container body {
+    min-height: calc(100vh - 85px);
+}
+
+.page-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    height: 60px;
+    border-top: 2px solid #ebe7df;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}

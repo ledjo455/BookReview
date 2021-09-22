@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Modifying Existing Book"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <div class="form-group">
+                    <h:panelGrid columns="2" style="width: 100%">
+                        <h:outputLabel value="Title" for="title" />
+                        <h:inputText id="title" class="form-control" value="#{bookBean.selectedBook.title}" title="Title" 
+                                     required="true" requiredMessage="Title can't be empty!"/>
+
+                        <h:outputLabel value="Release Date" for="releaseDate" />
+                        <h:inputText id="releaseDate" class="form-control" value="#{bookBean.selectedBook.releaseDate}" title="Release Date"
+                                     required="true" requiredMessage="Release date can't be empty!">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:inputText>
+
+                        <h:outputLabel value="Synopsis" for="synopsis" />
+                        <h:inputTextarea id="synopsis" class="form-control" value="#{bookBean.selectedBook.synopsis}" title="Synopsis"/>
+
+                        <h:outputLabel value="Thumbnail" for="thumbnail" />
+                        <h:inputText id="thumbnail" class="form-control" value="#{bookBean.selectedBook.thumbnail}" title="Thumbnail" />
+
+                        <h:outputLabel value="Genre" for="genre" />
+                        <h:inputText id="genre" class="form-control" value="#{bookBean.selectedBook.genre}" title="Genre" 
+                                     required="true" requiredMessage="Book genre can't be empty!"/>
+
+                        <h:outputLabel value="Rating" for="rating" />
+                        <h:inputText id="rating" class="form-control" value="#{bookBean.selectedBook.rating}" title="Rating" 
+                                     required="true" requiredMessage="Book rating can't be empty!"/>
+                    </h:panelGrid>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-12 text-right my-2">
+                        <h:commandLink class="btn btn-primary mx-2" action="#{bookBean.update}" value="Save"/>
+                        <h:commandLink class="btn btn-danger" action="/book/view" value="Cancel" immediate="true"/>
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
